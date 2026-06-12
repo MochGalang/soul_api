@@ -162,7 +162,7 @@ app.post('/api/upload', authenticateToken, upload.single('image'), async (req, r
     const filePath = `public/${fileName}`;
 
     const { error: uploadError } = await supabase.storage
-      .from('products')
+      .from('product')
       .upload(filePath, file.buffer, {
         contentType: file.mimetype,
         upsert: false
@@ -171,7 +171,7 @@ app.post('/api/upload', authenticateToken, upload.single('image'), async (req, r
     if (uploadError) throw uploadError;
 
     const { data } = supabase.storage
-      .from('products')
+      .from('product')
       .getPublicUrl(filePath);
 
     res.json({ url: data.publicUrl });
